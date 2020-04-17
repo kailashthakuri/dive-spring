@@ -5,16 +5,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-    <!--<bean id="spellChecker" class="io.ace.springframework.core.di.SpellChecker">-->
+    <!--<bean id="spellChecker" class="io.ace.springframework.core.ioc.di.SpellChecker">-->
     <!--<constructor-arg type="java.lang.String" value="Nepali"></constructor-arg>-->
     <!--</bean>-->
-    <!--<bean id="textEditor" class="io.ace.springframework.core.di.TextEditor">-->
+    <!--<bean id="textEditor" class="io.ace.springframework.core.ioc.di.TextEditor">-->
     <!--<constructor-arg ref="spellChecker"></constructor-arg>-->
     <!--</bean>-->
 
     <!--setter-->
-    <bean id="spellCheckerSetter" class="io.ace.springframework.core.di.SpellCheckSetter"></bean>
-    <bean class="io.ace.springframework.core.di.TextEditorSetter" id="textEditorSetter"
+    <bean id="spellCheckerSetter" class="io.ace.springframework.core.ioc.di.SpellCheckSetter"></bean>
+    <bean class="io.ace.springframework.core.ioc.di.TextEditorSetter" id="textEditorSetter"
           p:spellCheckSetter-ref  ="spellCheckerSetter">
     </bean>
 </beans>

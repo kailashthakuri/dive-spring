@@ -5,7 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean class="io.ace.springframework.core.collection.JavaCollection">
+
+    <bean class="io.ace.springframework.core.ioc.collection.JavaCollection">
         <property name="addressList">
             <list>
                 <value>Address List 1</value>

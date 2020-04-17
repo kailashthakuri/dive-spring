@@ -4,10 +4,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-    <bean id="helloWorld" class="io.ace.springframework.core.HelloWorld"
+    <bean id="helloWorld" class="io.ace.springframework.core.ioc.Messenger"
           init-method="init" destroy-method="destroy">
         <property name="message" value="Hello World!"/>
     </bean>
-    <bean class="io.ace.springframework.core.CustomBeanPostProcessor"></bean>
-
 </beans>

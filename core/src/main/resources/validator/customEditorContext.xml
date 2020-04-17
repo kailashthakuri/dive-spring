@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--This is one of the way to  register your custom PropertyEditor-->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="io.ace.springframework.core.validator.propertyeditor.ExoticType"
+                       value="io.ace.springframework.core.validator.propertyeditor.ExoticTypeEditor"></entry>
+            </map>
+        </property>
+    </bean>
+
+
+    <!--This is part of second way of registering CustomProperty  Editor-->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <ref bean="customPropertyEditorRegistrar"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="customPropertyEditorRegistrar"
+          class="io.ace.springframework.core.validator.propertyeditor.CustomPropertyEditorRegistrar"/>
+
+
+    <bean class="io.ace.springframework.core.validator.propertyeditor.DependsOnExoticType">
+        <property name="exoticType" value="aNameOfExoticType"></property>
+    </bean>
+</beans>

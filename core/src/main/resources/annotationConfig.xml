@@ -8,12 +8,12 @@
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <context:annotation-config/>
-    <bean class="io.ace.springframework.core.annotation.Profile"></bean>
-    <bean id="person1" class="io.ace.springframework.core.model.Person">
+    <bean class="io.ace.springframework.core.ioc.annotationbased.Profile"></bean>
+    <bean id="person1" class="io.ace.springframework.core.ioc.model.Person">
         <property name="name" value="kailash"></property>
         <property name="age" value="27"></property>
     </bean>
-    <bean id="person2" class="io.ace.springframework.core.model.Person">
+    <bean id="person2" class="io.ace.springframework.core.ioc.model.Person">
         <property name="name" value="Ashok"></property>
         <property name="age" value="27"></property>
     </bean>
