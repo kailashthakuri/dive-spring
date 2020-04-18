@@ -25,6 +25,5 @@
           p:name="kailash"
           p:age="34"
     />
-
     <bean class="io.ace.springframework.aop.HelloWorld"/>
 </beans>
