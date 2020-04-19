@@ -17,15 +17,19 @@
     <context:annotation-config/>
     <tx:advice id="txAdvice">
         <tx:attributes>
-            <tx:method name="create"/>
+            <!--all methods starting from get are  read-only-->
+            <tx:method name="get*" read-only="true"/>
+
+            <!--all other methods use the default transaction setting-->
+            <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
 
-    <bean id="studentDAO" class="io.ace.springframework.transaction.dao.impl.StudentDAOImpl"/>
+    <bean id="studentDAO" class="io.ace.springframework.transaction.dao.impl.PersonDAOImpl"/>
 
     <aop:config>
         <aop:pointcut id="txPointCut"
-                      expression="execution(* io.ace.springframework.transaction.dao.impl.StudentDAOImpl.createRecord(..))"></aop:pointcut>
+                      expression="execution(* io.ace.springframework.transaction.service.PersonService.*(..))"></aop:pointcut>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
     </aop:config>
 

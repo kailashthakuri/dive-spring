@@ -1,13 +1,13 @@
 package io.ace.springframework.transaction;
 
-import io.ace.springframework.transaction.dao.StudentDAO;
+import io.ace.springframework.transaction.dao.PersonDAO;
 import io.ace.springframework.transaction.model.Person;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class MainApplication {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationConfig.xml");
-        StudentDAO studentDAO = (StudentDAO) appContext.getBean("studentDAO");
+        PersonDAO studentDAO = (PersonDAO) appContext.getBean("studentDAO");
 
         Person person = new Person();
         person.setName("Dipen");
