@@ -4,7 +4,7 @@ import io.ace.springframewok.springjdbc.dao.StudentDAO;
 import io.ace.springframewok.springjdbc.dao.impl.StudentDAOImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class MainApp {
+public class StudentExample {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         StudentDAO studentDAO = appContext.getBean(StudentDAOImpl.class);

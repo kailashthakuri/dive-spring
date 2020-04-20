@@ -18,6 +18,5 @@
 
     <bean class="io.ace.springframewok.springjdbc.dao.impl.StudentDAOImpl" autowire="byType"/>
 
-    <bean class="io.ace.springframewok.springjdbc.HelloWorld"></bean>
 
 </beans>
