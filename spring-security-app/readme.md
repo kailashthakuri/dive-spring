@@ -28,7 +28,7 @@
 - https://github.com/apereo/cas/releases
 - https://golb.hplar.ch/2019/05/stateless.html
 
-#Oauth
+# Oauth
 - https://tools.ietf.org/html/rfc6749#section-1.3.1
 - youtube.com/watch?v=6DxRTJN1Ffo
 - https://www.youtube.com/watch?v=996OiexHze0
