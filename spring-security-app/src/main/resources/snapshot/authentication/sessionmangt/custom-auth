@@ -1,0 +1,98 @@
+package io.ace.springframework.securityapp.config;
+
+
+import io.ace.springframework.securityapp.config.filters.CustomUsernamePasswordAuthFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        return jdbcUserDetailsManager;
+    }
+
+    @Bean
+    public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
+        LoginUrlAuthenticationEntryPoint loginUrl = new LoginUrlAuthenticationEntryPoint("/login");
+        return loginUrl;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(userDetailsService());
+        return provider;
+    }
+
+    @Bean
+    public SessionFixationProtectionStrategy sessionFixationProtectionStrategy() {
+        SessionFixationProtectionStrategy strategy = new SessionFixationProtectionStrategy();
+        return strategy;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserPasswordProcessingFilter authenticationFilter() throws Exception {
+        UserPasswordProcessingFilter filter = new UserPasswordProcessingFilter();
+        filter.setSessionAuthenticationStrategy(sessionFixationProtectionStrategy());
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
+    }
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/login")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> {
+                    logout
+                            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                            .invalidateHttpSession(true)
+                            .logoutSuccessUrl("/login?logout");
+                })
+                .sessionManagement(session -> {
+                    session
+                            .sessionAuthenticationStrategy(sessionFixationProtectionStrategy())
+                            .maximumSessions(1);
+                })
+                .exceptionHandling(exception -> {
+                    exception.authenticationEntryPoint(loginUrlAuthenticationEntryPoint());
+                });
+    }
+}

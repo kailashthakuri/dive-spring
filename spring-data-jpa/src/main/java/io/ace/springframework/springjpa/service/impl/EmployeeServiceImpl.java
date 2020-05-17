@@ -48,6 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> search(SearchDTO searchDTO) {
         ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
+                .withNullHandler(ExampleMatcher.NullHandler.IGNORE)
+                .withIgnoreCase()
                 .withMatcher("firstName", genericPropertyMatcher -> genericPropertyMatcher.contains())
                 .withMatcher("age", genericPropertyMatcher -> genericPropertyMatcher.exact())
                 .withMatcher("lastName", genericPropertyMatcher -> genericPropertyMatcher.contains());
